@@ -2,12 +2,12 @@ local bit=bit or bit32 or require('bit')local unpack=table.unpack or unpack;loca
 
 game:GetService('StarterGui'):SetCore('SendNotification',{Title="Bogie LBI",Text="LBI is made by Bogie/Begie/Vegie and is free on my github, if you bought this request for a refund\n\n",Duration=5})
 
-getrenv().bogie_execute = function(dumped_function)
+getrenv().bogie_execute_v1 = function(dumped_function)
 	local CompiledFunction;
 	local Status, Error = pcall(function() 
 		CompiledFunction = b(a(dumped_function), getfenv()) 
 	end)
-	
+
 	if not Status then
 		error("Failed to compile script: " .. Error)
 	else
