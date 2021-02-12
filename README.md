@@ -1,7 +1,9 @@
 # bogie-lbi
 Roblox Lua Execution via Fione LBI
 
-changelog 1/20/21 updated lua offsets
+changelog 2/12/21 updates lua offsets and getrstate.
+
+changelog 1/20/21 updated lua offsets.
 
 changelog 1/15/21 add autoupdating.
 
