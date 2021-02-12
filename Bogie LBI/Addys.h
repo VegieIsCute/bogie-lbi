@@ -1,7 +1,5 @@
 int Identity1 = 24;
-int Identity2 = 112;
-
-unsigned int ADDRESS_Index2Adr = 0;
+int Identity2 = 108;
 
 unsigned int ADDRESS_deserialize = 0;
 unsigned int ADDRESS_lua_newthread = 0;
@@ -38,6 +36,7 @@ void r_spawn(unsigned int RLS) {
 	r_lua_pushvalue(RLS, -2);
 	r_lua_pcall(RLS, 1, 0, 0);
 }
+
 uintptr_t Rebase(uintptr_t addy) {
 	return (addy - 0x400000 + reinterpret_cast<uintptr_t>(GetModuleHandleA(NULL)));
 }
@@ -48,7 +47,7 @@ unsigned int* GetLevelLoc(unsigned int RState)
 
 unsigned int GetRState()
 {
-	return EyeStep::util::debug_r32(ADDRESS_Index2Adr + 3, EyeStep::R32_EBP, 8, 1)[0];
+	return EyeStep::util::debug_r32(ADDRESS_lua_newthread + 3, EyeStep::R32_EBP, 8, 1)[0];
 }
 
 unsigned int CreateCall(unsigned int addy, int ArgCount)
@@ -72,14 +71,12 @@ bool FindAddys()
 	ADDRESS_lua_pushcclosure = EyeStep::util::getPrologue(MT_CALLS.rbegin()[3]);
 	ADDRESS_lua_newthread = EyeStep::util::getPrologue(A1_CALLS[1]);
 	ADDRESS_lua_pcall = EyeStep::util::getPrologue(A1_CALLS[7]);
-	ADDRESS_Index2Adr = EyeStep::util::getPrologue(EyeStep::util::getCalls(ADDRESS_lua_pcall)[0]);
 
 	return true;
 }
 
 bool SetAddys()
 {
-	//ADDRESS_lua_pushlstring = Rebase(0x145A0E0);
 	r_deserialize = reinterpret_cast<deserialize_DEF>(CreateCall(ADDRESS_deserialize, 4));
 	r_lua_newthread = reinterpret_cast<newthread_DEF>(CreateCall(ADDRESS_lua_newthread, 1));
 	r_lua_pushlstring = reinterpret_cast<pushlstring_DEF>(CreateCall(ADDRESS_lua_pushlstring, 3));
